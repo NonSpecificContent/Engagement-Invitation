@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engagement Invitation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #003366;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .overlay {
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .register-screen, .invitation-screen {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .active {
+      display: flex;
+    }
+    input[type="text"] {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      width: 80%;
+      max-width: 300px;
+      font-size: 1em;
+    }
+    button {
+      background: linear-gradient(to right, #4da8f0, #0077cc);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #captureArea {
+      position: relative;
+      background: url('Backgound.jpg') no-repeat center center;
+      background-size: cover;
+      width: 768px;
+      max-width: 100%;
+      padding: 40px 20px;
+    }
+    .content-section {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 16px;
+      padding: 20px;
+      color: #003366;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+    img.qr {
+      width: 180px;
+      margin: 20px auto 0;
+      display: block;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      background: white;
+    }
+    .download-btn {
+      background-color: #1e90ff;
+      position: sticky;
+      bottom: 20px;
+      z-index: 999;
+    }
+    .guest-name {
+      font-size: 1.4em;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    a.map-link {
+      color: #0077cc;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+      text-align: center;
+      width: 100%;
+    }
+    a.map-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="register-screen active" id="registerScreen">
+      <h2>Welcome to Our Engagement/ ស្វាគមន៍មកកាន់ ពិធីភ្ជាប់ពាក្យ</h2>
+      <input type="text" id="guestName" placeholder="Enter Your Name/ បំពេញឈ្មោះរបស់អ្នក" />
+      <button onclick="showInvitation()">Click Here!/ ចុចទីនេះ!</button>
+    </div>
+
+    <div class="invitation-screen" id="invitationScreen">
+      <div id="captureArea">
+        <div class="content-section">
+          <div class="guest-name" id="displayGuestName"></div>
+          <h2 style="margin-top: 0; text-align: center;">Engagement Invitation</h2>
+          <p><strong>Bride:</strong> Keng Sokunthealy</p>
+          <p><strong>Groom:</strong> Chan Try</p>
+          <p><strong>Date & Time:</strong> 13-July-2025 | 08:00AM</p>
+          <p><strong>Venue:</strong> #87, Street Tamao, Orkide The Botanic City, Phnom Penh</p>
+          <hr style="border-color: #00336633; margin: 20px 0;">
+          <p><strong>កូនក្រមុំឈ្មោះ :</strong> កេង សុគន្ធាលី</p>
+          <p><strong>កូនកំលោះឈ្មោះ :</strong> ចាន់ ទ្រី</p>
+          <p><strong>កាលបរិច្ឆេទ និងពេលវេលា :</strong> ថ្ងៃទី១៣ ខែកក្កដា ឆ្នាំ២០២៥ | ០៨:០០ ព្រឹក</p>
+          <p><strong>ទីតាំង :</strong> ផ្ទះលេខ ៨៧, ផ្លូវតាម៉ៅ, អ័រគីដេ ដឹប៊ូតានិចស៊ីធី, រាជធានីភ្នំពេញ</p>
+          <p style="margin-top: 20px;"><em>Thank you in advance for honoring us with your presence.</em></p>
+          <p><em>សូមអរគុណជាមុនចំពោះការចូលរួមពិធីភ្ជាប់ពាក្យរបស់ពួកយើង។</em></p>
+
+          <!-- Google Map link -->
+          <a class="map-link" href="https://maps.app.goo.gl/2GkJ6ye84QKSk2yn8" target="_blank">
+            📍 View on Google Maps
+          </a>
+
+          <!-- QR Code -->
+          <img src="QR.jpg" class="qr" alt="Location QR Code" onerror="this.style.display='none'" />
+        </div>
+      </div>
+      <button class="download-btn" id="downloadBtn" onclick="downloadInvitation()">Download Invitation</button>
+    </div>
+  </div>
+
+  <script>
+    function showInvitation() {
+      const name = document.getElementById('guestName').value.trim();
+      if (!name) {
+        alert('Please enter your name.');
+        return;
+      }
+      document.getElementById('registerScreen').classList.remove('active');
+      document.getElementById('invitationScreen').classList.add('active');
+      document.getElementById('displayGuestName').innerText = 'Dear ' + name + ',';
+    }
+
+    function downloadInvitation() {
+      const link = document.createElement('a');
+      link.href = 'Invitation.jpg'; // Make sure this file exists in the same folder
+      link.download = 'Engagement_Invitation.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
